@@ -15,7 +15,7 @@ namespace Eventos.UI
     {
         public static void LocalTela()
         {
-          
+
             int menuEscolha = 0;
 
             while (menuEscolha != 6)
@@ -50,10 +50,11 @@ namespace Eventos.UI
                         break;
 
                     case 4:
-
+                        AtualizarIDPorLocal();
                         break;
 
                     case 5:
+                        DeletarLocalPorID();
 
                         break;
 
@@ -112,13 +113,15 @@ namespace Eventos.UI
             capacidade = Retorna.LerInteiro();
 
 
-            var local = new Local{
+            var local = new Local
+            {
                 Nome = nome,
                 Endereco = endereco,
                 Capacidade = capacidade
             };
 
             LocalRepository.AdicionarLocal(local);
+            Console.ReadKey();
         }
 
         private static void AtualizarIDPorLocal()
@@ -128,7 +131,7 @@ namespace Eventos.UI
             int id;
             bool loop = true;
             var local = new Local();
-        
+
 
             while (loop)
             {
@@ -165,6 +168,44 @@ namespace Eventos.UI
             capacidade = Retorna.LerInteiro();
 
             LocalRepository.EditarLocal(id, nome, endereco, capacidade);
+            Console.WriteLine($"ID: {id} {nome} foi atualizado");
+            Console.ReadKey();
+
+        }
+
+        private static void DeletarLocalPorID()
+        {
+            int id;
+            bool loop = true;
+            var local = new Local();
+
+            while (loop)
+            {
+                Console.WriteLine("Id do local, 0 se quiser voltar:");
+                id = Retorna.LerInteiro();
+
+                if (id == 0)
+                {
+                    return;
+                }
+
+                local = LocalRepository.LocalPorId(id);
+
+                if (local != null)
+                {
+                    loop = false; // Defina loop como false para sair do loop quando o local for encontrado
+                }
+                else
+                {
+                    Console.WriteLine("Local não encontrado. Tente novamente.");
+                    return;
+                }
+
+            }
+
+            LocalRepository.ExcluirLocal(local);
+            Console.WriteLine($"ID: {local.IdLocal} {local.Capacidade} FOI DELETADO COM SUCESSO!!!");
+            Console.ReadKey();
 
         }
     }
