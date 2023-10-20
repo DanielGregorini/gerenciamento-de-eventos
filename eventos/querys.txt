@@ -1,0 +1,30 @@
+//eventos por participantes
+
+SELECT 
+    idEvento, tb_participante.IdParticipante, Nome , Email 
+FROM 
+    tb_participante
+INNER JOIN 
+    tb_participante_evento 
+ON 
+    tb_participante.IdParticipante = tb_participante_evento.IdParticipante
+
+
+//eventos por participantes onde mostra o nome do evento
+
+SELECT
+    Evento.IdEvento AS IdEvento,
+    Evento.Nome AS NomeEvento,
+    Participante.IdParticipante,
+    Participante.Nome AS NomeParticipante,
+    Participante.Email
+FROM
+    tb_participante_evento AS PE
+INNER JOIN
+    tb_participante AS Participante 
+ON 
+    PE.IdParticipante = Participante.IdParticipante
+INNER JOIN
+    tb_evento AS Evento 
+ON 
+    PE.IdEvento = Evento.IdEvento;
