@@ -76,10 +76,10 @@ namespace Eventos
             Console.WriteLine("\nBy: Daniel Mahl Gregorini\n");
             Console.ReadKey();
 
-            bool menu = true;
+        
             int menuEscolha = 0;
 
-            while (menu)
+            while (menuEscolha != 5)
             {
 
                 Console.WriteLine("\nMenu\n");
@@ -87,6 +87,7 @@ namespace Eventos
                 Console.WriteLine("2-Tela Local");
                 Console.WriteLine("3-Tela Organizador");
                 Console.WriteLine("4-Tela Participante");
+                Console.WriteLine("5-Fechar");
                 menuEscolha = Retorna.LerInteiro();
 
                 switch(menuEscolha)
@@ -98,7 +99,7 @@ namespace Eventos
                         break;
 
                     case 2:
-
+                        LocalUI.LocalTela();
                         break;
 
                     case 3:
@@ -109,12 +110,12 @@ namespace Eventos
 
                         break;
 
+                    case 5:
+
+                        break;
 
                 }
             }
-
         }
-
-        
     }
 }
