@@ -103,11 +103,11 @@ namespace Eventos
                         break;
 
                     case 3:
-
+                        OrganizadorUI.OrganizadorTela();
                         break;
 
                     case 4:
-
+                        ParticipanteUI.ParticipanteTela();
                         break;
 
                     case 5:

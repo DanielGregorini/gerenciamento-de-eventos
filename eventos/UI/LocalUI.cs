@@ -50,7 +50,7 @@ namespace Eventos.UI
                         break;
 
                     case 4:
-                        AtualizarIDPorLocal();
+                        AtualizarLocalPorID();
                         break;
 
                     case 5:
@@ -92,7 +92,7 @@ namespace Eventos.UI
 
             var local = LocalRepository.LocalPorId(id);
 
-            Console.WriteLine($"ID: {local.IdLocal}, Nome: {local.Nome}, Endereço: Capacidade: {local.Capacidade} " +
+            Console.WriteLine($"ID: {local.IdLocal}, Nome: {local.Nome}, Capacidade: {local.Capacidade} " +
                     $"Endereço: {local.Endereco}");
 
             Console.ReadKey();
@@ -104,10 +104,10 @@ namespace Eventos.UI
             int capacidade;
 
             Console.WriteLine("Nome do local");
-            nome = Retorna.LeiaString();
+            nome = Retorna.LerString();
 
             Console.WriteLine("Endereço do local");
-            endereco = Retorna.LeiaString();
+            endereco = Retorna.LerString();
 
             Console.WriteLine("Capacidade do local");
             capacidade = Retorna.LerInteiro();
@@ -124,7 +124,7 @@ namespace Eventos.UI
             Console.ReadKey();
         }
 
-        private static void AtualizarIDPorLocal()
+        private static void AtualizarLocalPorID()
         {
             string nome, endereco;
             int capacidade;
@@ -159,10 +159,10 @@ namespace Eventos.UI
             id = local.IdLocal;
 
             Console.WriteLine("Novo Nome do local");
-            nome = Retorna.LeiaString();
+            nome = Retorna.LerString();
 
             Console.WriteLine("Novo Endereço do local");
-            endereco = Retorna.LeiaString();
+            endereco = Retorna.LerString();
 
             Console.WriteLine("Nova Capacidade do local");
             capacidade = Retorna.LerInteiro();
