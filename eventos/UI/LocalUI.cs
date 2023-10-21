@@ -8,6 +8,7 @@ using Eventos.Classes;
 using Eventos.Repository;
 using Eventos.Data;
 using Eventos.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Eventos.UI
 {
@@ -70,6 +71,12 @@ namespace Eventos.UI
         private static void ListarLocais()
         {
             var locais = LocalRepository.ListarLocais();
+
+            if(locais.Count == 0) {
+                Console.WriteLine("Não tem nem um local cadastrado");
+                Console.ReadKey();
+                return;
+            }
 
             Console.WriteLine(" Todos os locais:\n");
 

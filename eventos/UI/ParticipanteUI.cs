@@ -8,6 +8,7 @@ using Eventos.Classes;
 using Eventos.Repository;
 using Eventos.Data;
 using Eventos.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Eventos.UI
 {
@@ -19,7 +20,7 @@ namespace Eventos.UI
 
             int menuEscolha = 0;
 
-            while (menuEscolha != 6)
+            while (menuEscolha != 7)
             {
                 Console.Clear();
                 Console.WriteLine("--- Tela de Participantes ---");
@@ -29,7 +30,8 @@ namespace Eventos.UI
                 Console.WriteLine("3 - Adicionar Participante;");
                 Console.WriteLine("4 - Atualizar por ID;");
                 Console.WriteLine("5 - Deletar por ID;");
-                Console.WriteLine("6 - Retornar ao Menu Principal.");
+                Console.WriteLine("6 - Insirir participante em evento;");
+                Console.WriteLine("7 - Retornar ao Menu Principal.");
                 Console.WriteLine();
                 Console.Write("Selecione uma opção: ");
                 menuEscolha = Retorna.LerInteiro();
@@ -59,7 +61,7 @@ namespace Eventos.UI
                         break;
 
                     case 6:
-
+                        AdicionarParticipanteEmEvento();
                         break;
 
                 }
@@ -69,6 +71,13 @@ namespace Eventos.UI
         private static void ListarParticipantes()
         {
             var participantes = ParticipanteRepository.ListarParticipantes();
+
+            if (participantes.Count == 0)
+            {
+                Console.WriteLine("Não tem nem um participantes cadastrado");
+                Console.ReadKey();
+                return;
+            }
 
             Console.WriteLine(" Todos os participantes:\n");
 
@@ -196,6 +205,74 @@ namespace Eventos.UI
             ParticipanteRepository.ExcluirParticipante(participante);
             Console.WriteLine($"ID: {participante.IdParticipante} {participante.Nome} FOI DELETADO COM SUCESSO!!!");
             Console.ReadKey();
+        }
+
+        private static void AdicionarParticipanteEmEvento()
+        {
+            int idParticipante;
+            bool loop = true;
+            var participante = new Participante();
+            var evento = new Evento();
+
+            while (loop)
+            {
+                Console.WriteLine("Id do participante, 0 se quiser voltar:");
+                idParticipante = Retorna.LerInteiro();
+
+                if (idParticipante == 0)
+                {
+                    return;
+                }
+
+                participante = ParticipanteRepository.ParticipantePorId(idParticipante);
+
+                if (participante != null)
+                {
+                    loop = false; // Defina loop como false para sair do loop quando o local for encontrado
+                }
+                else
+                {
+                    Console.WriteLine("Participante não encontrado. Tente novamente.");
+                    return;
+                }
+            }
+
+            loop = true;
+
+            while (loop)
+            {
+                Console.WriteLine($"Id do Evento que você o participante: {participante.IdParticipante} |" +
+                    $" {participante.Nome}, 0 se quiser voltar:");
+                idParticipante = Retorna.LerInteiro();
+
+                if (idParticipante == 0)
+                {
+                    return;
+                }
+
+                evento = EventoRepository.EventoPorId(idParticipante);
+
+                if (evento != null)
+                {
+                    loop = false; // Defina loop como false para sair do loop quando o local for encontrado
+                }
+                else
+                {
+                    Console.WriteLine("evento não encontrado. Tente novamente.");
+                    return;
+                }
+            }
+
+            ParticipanteEvento participanteEvento = new ParticipanteEvento
+            {
+            IdParticipante = participante.IdParticipante,
+            IdEvento = evento.IdEvento
+            };
+
+           ParticipanteEventoRepository.AdicionarParticipanteEvento(participanteEvento);
+
+            Console.WriteLine($"Participante {participante.IdParticipante}|{participante.Nome} associado " +
+                $" ao evento {evento.IdEvento}|{evento.Nome}");
         }
     }
 }

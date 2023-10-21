@@ -95,7 +95,7 @@ namespace Eventos
 
 
                     case 1:
-
+                        EventoUI.EventoTela();
                         break;
 
                     case 2:

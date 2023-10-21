@@ -11,23 +11,18 @@ namespace Eventos.Utilities
         public static int LerInteiro()
         {
             int numero;
-            bool sucesso = false;
 
             do
             {
                 string entrada = Console.ReadLine();
 
-                sucesso = int.TryParse(entrada, out numero);
-
-                if (!sucesso || numero < 0)
+                if (int.TryParse(entrada, out numero) && numero >= 0)
                 {
-                    Console.WriteLine("Por favor, escreva um número valido");
-                    sucesso = true;
+                    return numero;
                 }
 
-            } while (!sucesso);
-
-            return numero;
+                Console.WriteLine("Por favor, digite um número inteiro não negativo.");
+            } while (true);
         }
 
         public static string LerString()
@@ -55,8 +50,8 @@ namespace Eventos.Utilities
             Console.Write("Digite o ano: ");
             do
             {
-                Console.WriteLine("Ano inválido. Tente novamente.");
-            } while (ano > 1);
+                ano = LerInteiro();
+            } while (ano < 1);
 
             // Solicitar o Mes
             Console.Write("Digite o mês: ");

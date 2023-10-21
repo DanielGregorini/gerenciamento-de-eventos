@@ -72,6 +72,13 @@ namespace Eventos.UI
         {
             var organizadores = OrganizadorRepository.ListarOrganizadores();
 
+            if (organizadores.Count == 0)
+            {
+                Console.WriteLine("Não tem nem um organizadores cadastrado");
+                Console.ReadKey();
+                return;
+            }
+
             Console.WriteLine(" Todos os locais:\n");
 
             foreach (var organizador in organizadores)

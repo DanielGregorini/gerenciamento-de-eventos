@@ -40,23 +40,23 @@ namespace Eventos.UI
 
 
                     case 1:
-                        ListarLocais();
+                        ListarEventos();
                         break;
 
                     case 2:
-                        BuscarLocalPorID();
+                        BuscarEventoPorID();
                         break;
 
                     case 3:
-                        AdicionarLocal();
+                        AdicionarEvento();
                         break;
 
                     case 4:
-                        AtualizarLocalPorID();
+                        AtualizarEventoPorID();
                         break;
 
                     case 5:
-                        DeletarLocalPorID();
+                        DeletarEventoPorID();
 
                         break;
 
@@ -72,17 +72,25 @@ namespace Eventos.UI
         private static void ListarEventos()
         {
             var eventos = EventoRepository.ListarEventos();
+            var local = new Local();
+
+            if(eventos.Count == 0) {
+                Console.WriteLine("Não tem nem um evento cadastrado");
+                Console.ReadKey();
+                return;
+            }
 
             Console.WriteLine(" Todos os eventos:\n");
 
             foreach (var evento in eventos)
             {
-                Console.WriteLine($"ID: {evento.IdEvento}, Nome: {evento.Nome}, Endereço: Capacidade: {evento.Data} " +
-                    $"ID do local:{evento.LocalID}, nome do local do evento {evento.Local.Nome}");
+                local = LocalRepository.LocalPorId(evento.LocalID);
+
+                Console.WriteLine($"ID: {evento.IdEvento}, Nome: {evento.Nome}, Data: {evento.Data}, " +
+                    $"ID Local: {local.IdLocal}, Nome do local: {local.Nome}, Capacidade do local: {local.Capacidade}");
             }
 
             Console.ReadKey();
-
         }
 
         private static void BuscarEventoPorID()
@@ -100,18 +108,10 @@ namespace Eventos.UI
             Console.ReadKey();
         }
 
-        //public int IdEvento { get; set; }
-        //public string Nome { get; set; }
-        //public DateTime Data { get; set; }
-        //public int LocalID { get; set; }
-        //public Local? Local { get; set; }
-        //public int OrganizadorID { get; set; }
-        //public Organizador Organizador { get; set; }
-        //public List<ParticipanteEvento> ParticipantesInscritos { get; set; }
-
         private static void AdicionarEvento()
         {
             string nome;
+            int idOrganizador, idLocal;
             DateTime data;
 
             Console.WriteLine("Nome do evento");
@@ -120,26 +120,35 @@ namespace Eventos.UI
             Console.WriteLine("Data do evento");
             data = Retorna.LerDateTime();
 
+            Console.WriteLine("ID do Local do evento");
+            idLocal = Retorna.LerInteiro();
+            var local = LocalRepository.LocalPorId(idLocal);
+
+            Console.WriteLine("ID do Organizador do evento");
+            idOrganizador = Retorna.LerInteiro();
+            var organizador = OrganizadorRepository.OrganizadorPorId(idOrganizador);
+
             var evento = new Evento
             {
                 Nome = nome,
                 Data = data,
-                
+                LocalID = local.IdLocal,
+                OrganizadorID = organizador.IdOrganizador,
             };
 
             EventoRepository.AdicionarEvento(evento);
             Console.ReadKey();
         }
 
-        private static void AtualizarLocalPorID()
+        private static void AtualizarEventoPorID()
         {
-            string nome, endereco;
-            int capacidade;
-            int id;
+            string Novonome;
+            int id, idNovoOrganizador, idNovoLocal;
+            DateTime novaData;
+
             bool loop = true;
-            var local = new Local();
-
-
+            var evento = new Evento();
+           
             while (loop)
             {
                 Console.WriteLine("Id do local, 0 se quiser voltar:");
@@ -150,45 +159,47 @@ namespace Eventos.UI
                     return;
                 }
 
-                local = LocalRepository.LocalPorId(id);
+                evento = EventoRepository.EventoPorId(id);
 
-                if (local != null)
+                if (evento != null)
                 {
                     loop = false; // Defina loop como false para sair do loop quando o local for encontrado
                 }
                 else
                 {
-                    Console.WriteLine("Local não encontrado. Tente novamente.");
+                    Console.WriteLine("Evento não encontrado. Tente novamente.");
                     return;
                 }
             }
 
-            id = local.IdLocal;
+            id = evento.IdEvento;
 
-            Console.WriteLine("Novo Nome do local");
-            nome = Retorna.LerString();
+            Console.WriteLine("Novo nome do evento");
+            Novonome = Retorna.LerString();
 
-            Console.WriteLine("Novo Endereço do local");
-            endereco = Retorna.LerString();
+            Console.WriteLine("Nova data do evento");
+            novaData = Retorna.LerDateTime();
 
-            Console.WriteLine("Nova Capacidade do local");
-            capacidade = Retorna.LerInteiro();
+            Console.WriteLine("ID do novo Organizador");
+            idNovoOrganizador = Retorna.LerInteiro();
+           
+            Console.WriteLine("ID do novo Local");
+            idNovoLocal = Retorna.LerInteiro();
 
-            LocalRepository.EditarLocal(id, nome, endereco, capacidade);
-            Console.WriteLine($"ID: {id} {nome} foi atualizado");
+            EventoRepository.EditarEvento(id, Novonome, novaData, idNovoLocal, idNovoOrganizador);
+            Console.WriteLine($"ID: {id} {Novonome} foi atualizado");
             Console.ReadKey();
-
         }
 
-        private static void DeletarLocalPorID()
+        private static void DeletarEventoPorID()
         {
             int id;
             bool loop = true;
-            var local = new Local();
+            var evento = new Evento();
 
             while (loop)
             {
-                Console.WriteLine("Id do local, 0 se quiser voltar:");
+                Console.WriteLine("Id do Evento, 0 se quiser voltar:");
                 id = Retorna.LerInteiro();
 
                 if (id == 0)
@@ -196,25 +207,23 @@ namespace Eventos.UI
                     return;
                 }
 
-                local = LocalRepository.LocalPorId(id);
+                evento = EventoRepository.EventoPorId(id);
 
-                if (local != null)
+                if (evento != null)
                 {
-                    loop = false; // Defina loop como false para sair do loop quando o local for encontrado
+                    loop = false; // Defina loop como false para sair do loop quando o evento for encontrado
                 }
                 else
                 {
-                    Console.WriteLine("Local não encontrado. Tente novamente.");
+                    Console.WriteLine("Evento não encontrado. Tente novamente.");
                     return;
                 }
 
             }
 
-            LocalRepository.ExcluirLocal(local);
-            Console.WriteLine($"ID: {local.IdLocal} {local.Capacidade} FOI DELETADO COM SUCESSO!!!");
+            EventoRepository.ExcluirEvento(evento);
+            Console.WriteLine($"ID: {evento.IdEvento} {evento.Nome} FOI DELETADO COM SUCESSO!!!");
             Console.ReadKey();
-
         }
-
     }
 }
