@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace Eventos.Classes
 {
     [Table("tb_participante_evento")]

@@ -1,14 +1,8 @@
 ﻿using System;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.ComponentModel.DataAnnotations.Schema;
 using Eventos.Classes;
 using Eventos.Data;
-
 namespace Eventos.Repository
 {
     class ParticipanteRepository

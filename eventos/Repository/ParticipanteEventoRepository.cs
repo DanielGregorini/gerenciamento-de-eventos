@@ -1,9 +1,4 @@
 ﻿using System;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.ComponentModel.DataAnnotations.Schema;
 using Eventos.Classes;
@@ -77,13 +72,29 @@ namespace Eventos.Repository
            
         }
 
-        static public ParticipanteEvento EncontrarParticipanteEventoPorId(int id)
+        static public ParticipanteEvento EncontrarParticipanteEventoPorId(int idEvento, int idParticipante)
         {
             using (var context = new EventContext())
             {
-                return context.ParticipanteEventos.Find(id);
-            }
-            
+                var participante = new Participante();
+                var evento = context.Eventos.Find(idEvento);
+
+                foreach(var participante_ in evento.ParticipantesInscritos)
+                {
+                    if (participante_.IdParticipante == idParticipante)
+                    {
+                        participante = context.Participantes.Find(participante_.IdParticipante);
+                        var eventoparticipante = new ParticipanteEvento
+                        {
+                            IdParticipante = participante_.IdParticipante,
+                            IdEvento = participante_.IdParticipante
+                        };
+
+                        return eventoparticipante;
+                    }
+                }
+                return null;
+            } 
         }
     }
 }
