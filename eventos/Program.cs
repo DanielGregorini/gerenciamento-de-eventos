@@ -17,6 +17,27 @@ namespace Eventos
     {
         static void Main(string[] args)
         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Console.Clear();
             Console.WriteLine("----- Sistema gerenciador de eventos -----\n\n");
             Console.WriteLine("By: Daniel Mahl Gregorini\n");

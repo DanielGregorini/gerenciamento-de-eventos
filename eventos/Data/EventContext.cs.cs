@@ -30,7 +30,7 @@ namespace Eventos.Data
         {
 
             modelBuilder.Entity<ParticipanteEvento>()
-                .HasKey(pe => new { pe.IdParticipante, pe.IdEvento });
+                .HasKey(pe => pe.IdParticipanteEvento);
 
             modelBuilder.Entity<ParticipanteEvento>()
                 .HasOne(pe => pe.Participante)

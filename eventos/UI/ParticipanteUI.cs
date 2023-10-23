@@ -18,13 +18,13 @@ namespace Eventos.UI
                 Console.Clear();
                 Console.WriteLine("--- Tela de Participantes ---");
                 Console.WriteLine();
-                Console.WriteLine("1 - Listar Participantes;");
-                Console.WriteLine("2 - Buscar por ID;");
-                Console.WriteLine("3 - Adicionar Participante;");
-                Console.WriteLine("4 - Atualizar por ID;");
-                Console.WriteLine("5 - Deletar por ID;");
-                Console.WriteLine("6 - Insirir participante em evento;");
-                Console.WriteLine("7 - Retornar ao Menu Principal.");
+                Console.WriteLine("1 - Listar Participantes");
+                Console.WriteLine("2 - Buscar por ID");
+                Console.WriteLine("3 - Adicionar Participante");
+                Console.WriteLine("4 - Atualizar por ID");
+                Console.WriteLine("5 - Deletar por ID");
+                Console.WriteLine("6 - Insirir participante em evento");
+                Console.WriteLine("7 - Retornar ao Menu Principal");
                 Console.WriteLine();
                 Console.Write("Selecione uma opção: ");
                 menuEscolha = Retorna.LerInteiro();
@@ -56,7 +56,7 @@ namespace Eventos.UI
                     case 6:
                         AdicionarParticipanteEmEvento();
                         break;
-
+    
                 }
             }
         }

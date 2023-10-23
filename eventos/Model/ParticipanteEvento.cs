@@ -12,6 +12,7 @@ namespace Eventos.Classes
     [Table("tb_participante_evento")]
     class ParticipanteEvento
     {
+        [Key]
         public int IdParticipanteEvento { get; set; }
         public int IdParticipante { get; set; }
         public Participante Participante { get; set; }

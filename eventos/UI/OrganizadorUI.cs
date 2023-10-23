@@ -20,7 +20,7 @@ namespace Eventos.UI
                 Console.WriteLine();
                 Console.WriteLine("1 - Listar Organizadores;");
                 Console.WriteLine("2 - Buscar por ID;");
-                Console.WriteLine("3 - Adicionar Local;");
+                Console.WriteLine("3 - Adicionar Organizador;");
                 Console.WriteLine("4 - Atualizar por ID;");
                 Console.WriteLine("5 - Deletar por ID;");
                 Console.WriteLine("6 - Retornar ao Menu Principal.");
